@@ -157,7 +157,7 @@ typedef v8::String::ExternalOneByteStringResource
     ExternalOneByteStringResource;
 
 
-#if (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)
+
 template<typename T>
 class NonCopyablePersistentTraits :
     public v8::NonCopyablePersistentTraits<T> {};
@@ -171,13 +171,7 @@ class PersistentBase :
 
 template<typename T, typename M = v8::NonCopyablePersistentTraits<T> >
 class Persistent;
-#else
-template<typename T> class NonCopyablePersistentTraits;
-template<typename T> class PersistentBase;
-template<typename T, typename P> class WeakCallbackData;
-template<typename T, typename M = NonCopyablePersistentTraits<T> >
-class Persistent;
-#endif  // NODE_MODULE_VERSION
+
 
 #include "nan_maybe_43_inl.h"  // NOLINT(build/include)
 
