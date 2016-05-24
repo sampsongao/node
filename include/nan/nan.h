@@ -294,17 +294,10 @@ class HandleScope {
   v8::HandleScope scope;
 
  public:
-#if NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
   inline HandleScope() : scope(v8::Isolate::GetCurrent()) {}
   inline static int NumberOfHandles() {
     return v8::HandleScope::NumberOfHandles(v8::Isolate::GetCurrent());
   }
-#else
-  inline HandleScope() : scope() {}
-  inline static int NumberOfHandles() {
-    return v8::HandleScope::NumberOfHandles();
-  }
-#endif
 
  private:
   // Make it hard to create heap-allocated or illegal handle scopes by
