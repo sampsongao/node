@@ -191,12 +191,7 @@ template<typename T, typename M = NonCopyablePersistentTraits<T> >
 class Persistent;
 #endif  // NODE_MODULE_VERSION
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
-# include "nan_maybe_43_inl.h"  // NOLINT(build/include)
-#else
-# include "nan_maybe_pre_43_inl.h"  // NOLINT(build/include)
-#endif
+#include "nan_maybe_43_inl.h"  // NOLINT(build/include)
 
 #include "nan_converters.h"  // NOLINT(build/include)
 #include "nan_new.h"  // NOLINT(build/include)
