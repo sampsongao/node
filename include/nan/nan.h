@@ -277,11 +277,8 @@ typedef v8::WeakCallbackType WeakCallbackType;
 
 template<typename P> class WeakCallbackInfo;
 
-#if NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
-# include "nan_persistent_12_inl.h"  // NOLINT(build/include)
-#else
-# include "nan_persistent_pre_12_inl.h"  // NOLINT(build/include)
-#endif
+
+#include "nan_persistent_12_inl.h"  // NOLINT(build/include)
 
 namespace imp {
   static const size_t kMaxLength = 0x3fffffff;
