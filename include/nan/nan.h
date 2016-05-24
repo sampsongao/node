@@ -310,7 +310,6 @@ class HandleScope {
 
 class EscapableHandleScope {
  public:
-#if NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
   inline EscapableHandleScope() : scope(v8::Isolate::GetCurrent()) {}
 
   inline static int NumberOfHandles() {
@@ -324,21 +323,6 @@ class EscapableHandleScope {
 
  private:
   v8::EscapableHandleScope scope;
-#else
-  inline EscapableHandleScope() : scope() {}
-
-  inline static int NumberOfHandles() {
-    return v8::HandleScope::NumberOfHandles();
-  }
-
-  template<typename T>
-  inline v8::Local<T> Escape(v8::Local<T> value) {
-    return scope.Close(value);
-  }
-
- private:
-  v8::HandleScope scope;
-#endif
 
  private:
   // Make it hard to create heap-allocated or illegal handle scopes by
