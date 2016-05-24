@@ -149,13 +149,9 @@ typedef v8::Local<v8::Object> ADDON_REGISTER_FUNCTION_ARGS_TYPE;
 
 //==============================================================================
 
-#if (NODE_MODULE_VERSION < NODE_0_12_MODULE_VERSION)
-typedef v8::Script             UnboundScript;
-typedef v8::Script             BoundScript;
-#else
 typedef v8::UnboundScript      UnboundScript;
 typedef v8::Script             BoundScript;
-#endif
+
 
 #if (NODE_MODULE_VERSION < ATOM_0_21_MODULE_VERSION)
 typedef v8::String::ExternalAsciiStringResource
