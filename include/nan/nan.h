@@ -284,14 +284,8 @@ namespace imp {
   static const size_t kMaxLength = 0x3fffffff;
   // v8::String::REPLACE_INVALID_UTF8 was introduced
   // in node.js v0.10.29 and v0.8.27.
-#if NODE_MAJOR_VERSION > 0 || \
-    NODE_MINOR_VERSION > 10 || \
-    NODE_MINOR_VERSION == 10 && NODE_PATCH_VERSION >= 29 || \
-    NODE_MINOR_VERSION == 8 && NODE_PATCH_VERSION >= 27
+
   static const unsigned kReplaceInvalidUtf8 = v8::String::REPLACE_INVALID_UTF8;
-#else
-  static const unsigned kReplaceInvalidUtf8 = 0;
-#endif
 }  // end of namespace imp
 
 //=== HandleScope ==============================================================
