@@ -270,10 +270,6 @@ inline void nauv_key_set(nauv_key_t* key, void* value) {
 #endif
 #endif
 
-#if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-template<typename T>
-v8::Local<T> New(v8::Handle<T>);
-#endif
 
 #if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
   (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
