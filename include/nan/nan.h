@@ -153,13 +153,9 @@ typedef v8::UnboundScript      UnboundScript;
 typedef v8::Script             BoundScript;
 
 
-#if (NODE_MODULE_VERSION < ATOM_0_21_MODULE_VERSION)
-typedef v8::String::ExternalAsciiStringResource
-    ExternalOneByteStringResource;
-#else
 typedef v8::String::ExternalOneByteStringResource
     ExternalOneByteStringResource;
-#endif
+
 
 #if (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)
 template<typename T>
