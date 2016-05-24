@@ -271,18 +271,9 @@ inline void nauv_key_set(nauv_key_t* key, void* value) {
 #endif
 
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
-  typedef v8::WeakCallbackType WeakCallbackType;
-#else
-struct WeakCallbackType {
-  enum E {kParameter, kInternalFields};
-  E type;
-  WeakCallbackType(E other) : type(other) {}  // NOLINT(runtime/explicit)
-  inline bool operator==(E other) { return other == this->type; }
-  inline bool operator!=(E other) { return !operator==(other); }
-};
-#endif
+
+typedef v8::WeakCallbackType WeakCallbackType;
+
 
 template<typename P> class WeakCallbackInfo;
 
