@@ -138,11 +138,7 @@ namespace Nan {
 
 //=== RegistrationFunction =====================================================
 
-#if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-  typedef v8::Handle<v8::Object> ADDON_REGISTER_FUNCTION_ARGS_TYPE;
-#else
-  typedef v8::Local<v8::Object> ADDON_REGISTER_FUNCTION_ARGS_TYPE;
-#endif
+typedef v8::Local<v8::Object> ADDON_REGISTER_FUNCTION_ARGS_TYPE;
 
 #define NAN_MODULE_INIT(name)                                                  \
     void name(Nan::ADDON_REGISTER_FUNCTION_ARGS_TYPE target)
