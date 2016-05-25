@@ -627,13 +627,8 @@ class TryCatch {
     , v8::Local<v8::String> symbol
     , int argc
     , v8::Local<v8::Value>* argv) {
-#if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-    return New(node::MakeCallback(
-        v8::Isolate::GetCurrent(), target, symbol, argc, argv));
-#else
     return node::MakeCallback(
         v8::Isolate::GetCurrent(), target, symbol, argc, argv);
-#endif
   }
 
   NAN_INLINE v8::Local<v8::Value> MakeCallback(
