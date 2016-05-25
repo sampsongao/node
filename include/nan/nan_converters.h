@@ -54,11 +54,6 @@ typename imp::ToFactory<T>::return_t To(v8::Local<v8::Value> val) {
   return imp::ToFactory<T>::convert(val);
 }
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
-# include "nan_converters_43_inl.h"
-#else
-# include "nan_converters_pre_43_inl.h"
-#endif
+#include "nan_converters_43_inl.h"
 
 #endif  // NAN_CONVERTERS_H_
