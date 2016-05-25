@@ -283,13 +283,6 @@ Factory<v8::UnboundScript>::New( v8::Local<v8::String> source
 
 //=== Presistents and Handles ==================================================
 
-#if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-template <typename T>
-inline v8::Local<T> New(v8::Handle<T> h) {
-  return v8::Local<T>::New(v8::Isolate::GetCurrent(), h);
-}
-#endif
-
 template <typename T, typename M>
 inline v8::Local<T> New(v8::Persistent<T, M> const& p) {
   return v8::Local<T>::New(v8::Isolate::GetCurrent(), p);
