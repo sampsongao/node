@@ -887,12 +887,8 @@ class Callback {
   Call(v8::Local<v8::Object> target
      , int argc
      , v8::Local<v8::Value> argv[]) const {
-#if (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)
     v8::Isolate *isolate = v8::Isolate::GetCurrent();
     return Call_(isolate, target, argc, argv);
-#else
-    return Call_(target, argc, argv);
-#endif
   }
 
   NAN_INLINE v8::Local<v8::Value>
