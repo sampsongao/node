@@ -58,8 +58,7 @@ class ObjectWrap {
     MakeWeak();
   }
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
+
 
   inline void MakeWeak() {
     persistent().v8::PersistentBase<v8::Object>::SetWeak(
@@ -67,21 +66,6 @@ class ObjectWrap {
     persistent().MarkIndependent();
   }
 
-#elif NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
-
-  inline void MakeWeak() {
-    persistent().v8::PersistentBase<v8::Object>::SetWeak(this, WeakCallback);
-    persistent().MarkIndependent();
-  }
-
-#else
-
-  inline void MakeWeak() {
-    persistent().persistent.MakeWeak(this, WeakCallback);
-    persistent().MarkIndependent();
-  }
-
-#endif
 
   /* Ref() marks the object as being attached to an event loop.
    * Refed objects will not be garbage collected, even if
