@@ -911,15 +911,6 @@ class Callback {
 
     v8::Local<v8::Function> callback = New(handle)->
         Get(kCallbackIndex).As<v8::Function>();
-# if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-    return scope.Escape(New(node::MakeCallback(
-        isolate
-      , target
-      , callback
-      , argc
-      , argv
-    )));
-# else
     return scope.Escape(node::MakeCallback(
         isolate
       , target
@@ -927,7 +918,6 @@ class Callback {
       , argc
       , argv
     ));
-# endif
   }
 #else
   v8::Local<v8::Value> Call_(v8::Local<v8::Object> target
