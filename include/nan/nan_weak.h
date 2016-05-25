@@ -55,24 +55,13 @@ class WeakCallbackInfo {
   v8::Persistent<v8::Value> persistent_;
   template<typename S, typename M> friend class Persistent;
   template<typename S> friend class PersistentBase;
-#if NODE_MODULE_VERSION <= NODE_0_12_MODULE_VERSION
-# if NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
-  template<typename S>
-  static void invoke(NAN_WEAK_CALLBACK_SIG_ data);
-  template<typename S>
-  static WeakCallbackInfo *unwrap(NAN_WEAK_CALLBACK_DATA_TYPE_ data);
-# else
-  static void invoke(NAN_WEAK_CALLBACK_SIG_ data);
-  static WeakCallbackInfo *unwrap(NAN_WEAK_CALLBACK_DATA_TYPE_ data);
-# endif
-#else
+
   static void invokeparameter(NAN_WEAK_PARAMETER_CALLBACK_SIG_ data);
   static void invoketwofield(NAN_WEAK_TWOFIELD_CALLBACK_SIG_ data);
   static WeakCallbackInfo *unwrapparameter(
       NAN_WEAK_PARAMETER_CALLBACK_DATA_TYPE_ data);
   static WeakCallbackInfo *unwraptwofield(
       NAN_WEAK_TWOFIELD_CALLBACK_DATA_TYPE_ data);
-#endif
 };
 
 
