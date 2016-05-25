@@ -578,8 +578,7 @@ class TryCatch {
     return node::Buffer::New(v8::Isolate::GetCurrent(), data, size);
   }
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
+
   NAN_INLINE MaybeLocal<v8::String>
   NewOneByteString(const uint8_t * value, int length = -1) {
     return v8::String::NewFromOneByte(v8::Isolate::GetCurrent(), value,
@@ -612,45 +611,7 @@ class TryCatch {
   ) {
     return script->Run(GetCurrentContext());
   }
-#else
-  NAN_INLINE MaybeLocal<v8::String>
-  NewOneByteString(const uint8_t * value, int length = -1) {
-    return MaybeLocal<v8::String>(
-        v8::String::NewFromOneByte(
-            v8::Isolate::GetCurrent()
-          , value
-          , v8::String::kNormalString, length));
-  }
 
-  NAN_INLINE MaybeLocal<BoundScript> CompileScript(
-      v8::Local<v8::String> s
-    , const v8::ScriptOrigin& origin
-  ) {
-    v8::ScriptCompiler::Source source(s, origin);
-    return MaybeLocal<BoundScript>(
-        v8::ScriptCompiler::Compile(v8::Isolate::GetCurrent(), &source));
-  }
-
-  NAN_INLINE MaybeLocal<BoundScript> CompileScript(
-      v8::Local<v8::String> s
-  ) {
-    v8::ScriptCompiler::Source source(s);
-    return MaybeLocal<BoundScript>(
-        v8::ScriptCompiler::Compile(v8::Isolate::GetCurrent(), &source));
-  }
-
-  NAN_INLINE MaybeLocal<v8::Value> RunScript(
-      v8::Local<UnboundScript> script
-  ) {
-    return MaybeLocal<v8::Value>(script->BindToCurrentContext()->Run());
-  }
-
-  NAN_INLINE MaybeLocal<v8::Value> RunScript(
-      v8::Local<BoundScript> script
-  ) {
-    return MaybeLocal<v8::Value>(script->Run());
-  }
-#endif
 
   NAN_INLINE v8::Local<v8::Value> MakeCallback(
       v8::Local<v8::Object> target
