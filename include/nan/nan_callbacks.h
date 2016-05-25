@@ -79,10 +79,6 @@ static const int kIndexPropertyFieldCount =      6;
 
 }  // end of namespace imp
 
-#if NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
 # include "nan_callbacks_12_inl.h"  // NOLINT(build/include)
-#else
-# include "nan_callbacks_pre_12_inl.h"  // NOLINT(build/include)
-#endif
 
 #endif  // NAN_CALLBACKS_H_
