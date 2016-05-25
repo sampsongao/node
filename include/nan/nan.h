@@ -1502,18 +1502,8 @@ inline void SetIndexedPropertyHandler(
     obj->SetInternalField(imp::kDataIndex, data);
   }
 
-#if NODE_MODULE_VERSION > NODE_0_12_MODULE_VERSION
   tpl->SetHandler(v8::IndexedPropertyHandlerConfiguration(
       getter_, setter_, query_, deleter_, enumerator_, obj));
-#else
-  tpl->SetIndexedPropertyHandler(
-      getter_
-    , setter_
-    , query_
-    , deleter_
-    , enumerator_
-    , obj);
-#endif
 }
 
 inline void SetCallHandler(
