@@ -540,13 +540,10 @@ class TryCatch {
     // arbitrary buffer lengths requires
     // NODE_MODULE_VERSION >= IOJS_3_0_MODULE_VERSION
     assert(length <= imp::kMaxLength && "too large buffer");
-#if NODE_MODULE_VERSION > IOJS_2_0_MODULE_VERSION
+
     return node::Buffer::New(
         v8::Isolate::GetCurrent(), data, length, callback, hint);
-#else
-    return MaybeLocal<v8::Object>(node::Buffer::New(
-        v8::Isolate::GetCurrent(), data, length, callback, hint));
-#endif
+
   }
 
   NAN_INLINE MaybeLocal<v8::Object> CopyBuffer(
