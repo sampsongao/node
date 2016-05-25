@@ -168,7 +168,7 @@ void FunctionCallbackWrapper(const v8::FunctionCallbackInfo<v8::Value> &info) {
 
 typedef void (*NativeFunction)(const v8::FunctionCallbackInfo<v8::Value> &);
 
-#if NODE_MODULE_VERSION > NODE_0_12_MODULE_VERSION
+
 static
 void GetterCallbackWrapper(
     v8::Local<v8::Name> property
@@ -203,42 +203,7 @@ typedef void (*NativeSetter)(
     v8::Local<v8::Name>
   , v8::Local<v8::Value>
   , const v8::PropertyCallbackInfo<void> &);
-#else
-static
-void GetterCallbackWrapper(
-    v8::Local<v8::String> property
-  , const v8::PropertyCallbackInfo<v8::Value> &info) {
-  v8::Local<v8::Object> obj = info.Data().As<v8::Object>();
-  PropertyCallbackInfo<v8::Value>
-      cbinfo(info, obj->GetInternalField(kDataIndex));
-  GetterCallback callback = reinterpret_cast<GetterCallback>(
-      reinterpret_cast<intptr_t>(
-          obj->GetInternalField(kGetterIndex).As<v8::External>()->Value()));
-  callback(property, cbinfo);
-}
 
-typedef void (*NativeGetter)
-    (v8::Local<v8::String>, const v8::PropertyCallbackInfo<v8::Value> &);
-
-static
-void SetterCallbackWrapper(
-    v8::Local<v8::String> property
-  , v8::Local<v8::Value> value
-  , const v8::PropertyCallbackInfo<void> &info) {
-  v8::Local<v8::Object> obj = info.Data().As<v8::Object>();
-  PropertyCallbackInfo<void>
-      cbinfo(info, obj->GetInternalField(kDataIndex));
-  SetterCallback callback = reinterpret_cast<SetterCallback>(
-      reinterpret_cast<intptr_t>(
-          obj->GetInternalField(kSetterIndex).As<v8::External>()->Value()));
-  callback(property, value, cbinfo);
-}
-
-typedef void (*NativeSetter)(
-    v8::Local<v8::String>
-  , v8::Local<v8::Value>
-  , const v8::PropertyCallbackInfo<void> &);
-#endif
 
 #if NODE_MODULE_VERSION > NODE_0_12_MODULE_VERSION
 static
