@@ -173,7 +173,7 @@ struct Factory<v8::StringObject> : FactoryBase<v8::StringObject> {
 
 }  // end of namespace imp
 
-#if (NODE_MODULE_VERSION >= 12)
+
 
 namespace imp {
 
@@ -187,12 +187,6 @@ struct Factory<v8::UnboundScript> : MaybeFactoryBase<v8::UnboundScript> {
 }  // end of namespace imp
 
 # include "nan_implementation_12_inl.h"
-
-#else  // NODE_MODULE_VERSION >= 12
-
-# include "nan_implementation_pre_12_inl.h"
-
-#endif
 
 //=== API ======================================================================
 
