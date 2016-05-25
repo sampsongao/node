@@ -185,22 +185,14 @@ Factory<v8::ObjectTemplate>::New() {
 
 //=== RegExp ===================================================================
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
+
 Factory<v8::RegExp>::return_t
 Factory<v8::RegExp>::New(
     v8::Local<v8::String> pattern
   , v8::RegExp::Flags flags) {
   return v8::RegExp::New(GetCurrentContext(), pattern, flags);
 }
-#else
-Factory<v8::RegExp>::return_t
-Factory<v8::RegExp>::New(
-    v8::Local<v8::String> pattern
-  , v8::RegExp::Flags flags) {
-  return Factory<v8::RegExp>::return_t(v8::RegExp::New(pattern, flags));
-}
-#endif
+
 
 //=== Script ===================================================================
 
