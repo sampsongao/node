@@ -466,13 +466,8 @@ class TryCatch {
 # define NAN_GC_CALLBACK(name)                                                 \
     void name(v8::Isolate *isolate, v8::GCType type, v8::GCCallbackFlags flags)
 
-#if NODE_MODULE_VERSION <= NODE_4_0_MODULE_VERSION
-  typedef v8::Isolate::GCEpilogueCallback GCEpilogueCallback;
-  typedef v8::Isolate::GCPrologueCallback GCPrologueCallback;
-#else
   typedef v8::Isolate::GCCallback GCEpilogueCallback;
   typedef v8::Isolate::GCCallback GCPrologueCallback;
-#endif
 
   NAN_INLINE void AddGCEpilogueCallback(
       GCEpilogueCallback callback
