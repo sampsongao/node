@@ -374,7 +374,7 @@ class TryCatch {
 //============ =================================================================
 
 /* node 0.12  */
-#if NODE_MODULE_VERSION >= NODE_0_12_MODULE_VERSION
+
   NAN_INLINE
   void SetCounterFunction(v8::CounterLookupCallback cb) {
     v8::Isolate::GetCurrent()->SetCounterFunction(cb);
@@ -390,17 +390,11 @@ class TryCatch {
     v8::Isolate::GetCurrent()->SetAddHistogramSampleFunction(cb);
   }
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
+
   NAN_INLINE bool IdleNotification(int idle_time_in_ms) {
     return v8::Isolate::GetCurrent()->IdleNotificationDeadline(
         idle_time_in_ms * 0.001);
   }
-# else
-  NAN_INLINE bool IdleNotification(int idle_time_in_ms) {
-    return v8::Isolate::GetCurrent()->IdleNotification(idle_time_in_ms);
-  }
-#endif
 
   NAN_INLINE void LowMemoryNotification() {
     v8::Isolate::GetCurrent()->LowMemoryNotification();
@@ -409,34 +403,7 @@ class TryCatch {
   NAN_INLINE void ContextDisposedNotification() {
     v8::Isolate::GetCurrent()->ContextDisposedNotification();
   }
-#else
-  NAN_INLINE
-  void SetCounterFunction(v8::CounterLookupCallback cb) {
-    v8::V8::SetCounterFunction(cb);
-  }
 
-  NAN_INLINE
-  void SetCreateHistogramFunction(v8::CreateHistogramCallback cb) {
-    v8::V8::SetCreateHistogramFunction(cb);
-  }
-
-  NAN_INLINE
-  void SetAddHistogramSampleFunction(v8::AddHistogramSampleCallback cb) {
-    v8::V8::SetAddHistogramSampleFunction(cb);
-  }
-
-  NAN_INLINE bool IdleNotification(int idle_time_in_ms) {
-    return v8::V8::IdleNotification(idle_time_in_ms);
-  }
-
-  NAN_INLINE void LowMemoryNotification() {
-    v8::V8::LowMemoryNotification();
-  }
-
-  NAN_INLINE void ContextDisposedNotification() {
-    v8::V8::ContextDisposedNotification();
-  }
-#endif
 
 #if (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)  // Node 0.12
   NAN_INLINE v8::Local<v8::Primitive> Undefined() {
