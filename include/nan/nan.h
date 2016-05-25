@@ -39,7 +39,7 @@
 # define NAN_HAS_CPLUSPLUS_11 (__cplusplus >= 201103L)
 #endif
 
-#if NODE_MODULE_VERSION >= IOJS_3_0_MODULE_VERSION && !NAN_HAS_CPLUSPLUS_11
+#if !NAN_HAS_CPLUSPLUS_11
 # error This version of node/NAN/v8 requires a C++11 compiler
 #endif
 
