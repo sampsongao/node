@@ -636,13 +636,8 @@ class TryCatch {
     , const char* method
     , int argc
     , v8::Local<v8::Value>* argv) {
-#if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-    return New(node::MakeCallback(
-        v8::Isolate::GetCurrent(), target, method, argc, argv));
-#else
     return node::MakeCallback(
         v8::Isolate::GetCurrent(), target, method, argc, argv);
-#endif
   }
 
   NAN_INLINE void FatalException(const TryCatch& try_catch) {
