@@ -1165,9 +1165,6 @@ IsExternal(v8::Local<v8::String> str) {
 
 enum Encoding {ASCII, UTF8, BASE64, UCS2, BINARY, HEX, BUFFER};
 
-#if NODE_MODULE_VERSION < NODE_0_10_MODULE_VERSION
-# include "nan_string_bytes.h"  // NOLINT(build/include)
-#endif
 
 NAN_INLINE v8::Local<v8::Value> Encode(
     const void *buf, size_t len, enum Encoding encoding = BINARY) {
