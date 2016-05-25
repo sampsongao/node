@@ -1158,11 +1158,7 @@ GetExternalResource(v8::Local<v8::String> str) {
 inline
 bool
 IsExternal(v8::Local<v8::String> str) {
-#if NODE_MODULE_VERSION < ATOM_0_21_MODULE_VERSION
-    return str->IsExternalAscii();
-#else
     return str->IsExternalOneByte();
-#endif
 }
 
 }  // end of namespace imp
