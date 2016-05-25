@@ -1168,7 +1168,7 @@ enum Encoding {ASCII, UTF8, BASE64, UCS2, BINARY, HEX, BUFFER};
 
 NAN_INLINE v8::Local<v8::Value> Encode(
     const void *buf, size_t len, enum Encoding encoding = BINARY) {
-#if (NODE_MODULE_VERSION >= ATOM_0_21_MODULE_VERSION)
+
   v8::Isolate* isolate = v8::Isolate::GetCurrent();
   node::encoding node_enc = static_cast<node::encoding>(encoding);
 
@@ -1184,18 +1184,6 @@ NAN_INLINE v8::Local<v8::Value> Encode(
       , len
       , node_enc);
   }
-#elif (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)
-  return node::Encode(
-      v8::Isolate::GetCurrent()
-    , buf, len
-    , static_cast<node::encoding>(encoding));
-#else
-# if NODE_MODULE_VERSION >= NODE_0_10_MODULE_VERSION
-  return node::Encode(buf, len, static_cast<node::encoding>(encoding));
-# else
-  return imp::Encode(reinterpret_cast<const char*>(buf), len, encoding);
-# endif
-#endif
 }
 
 NAN_INLINE ssize_t DecodeBytes(
