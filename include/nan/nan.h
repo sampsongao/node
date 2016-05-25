@@ -1152,11 +1152,7 @@ namespace imp {
 inline
 ExternalOneByteStringResource const*
 GetExternalResource(v8::Local<v8::String> str) {
-#if NODE_MODULE_VERSION < ATOM_0_21_MODULE_VERSION
-    return str->GetExternalAsciiStringResource();
-#else
     return str->GetExternalOneByteStringResource();
-#endif
 }
 
 inline
