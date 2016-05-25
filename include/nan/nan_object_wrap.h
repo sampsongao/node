@@ -98,8 +98,7 @@ class ObjectWrap {
 
  private:
   NAN_DISALLOW_ASSIGN_COPY_MOVE(ObjectWrap)
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
+
 
   static void
   WeakCallback(v8::WeakCallbackInfo<ObjectWrap> const& info) {
@@ -110,28 +109,6 @@ class ObjectWrap {
     delete wrap;
   }
 
-#elif NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
-
-  static void
-  WeakCallback(v8::WeakCallbackData<v8::Object, ObjectWrap> const& data) {
-    ObjectWrap* wrap = data.GetParameter();
-    assert(wrap->refs_ == 0);
-    assert(wrap->handle_.IsNearDeath());
-    wrap->handle_.Reset();
-    delete wrap;
-  }
-
-#else
-
-  static void WeakCallback(v8::Persistent<v8::Value> value, void *data) {
-    ObjectWrap *wrap = static_cast<ObjectWrap*>(data);
-    assert(wrap->refs_ == 0);
-    assert(wrap->handle_.IsNearDeath());
-    wrap->handle_.Reset();
-    delete wrap;
-  }
-
-#endif
   Persistent<v8::Object> handle_;
 };
 
