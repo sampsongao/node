@@ -340,20 +340,14 @@ class TryCatch {
   friend void FatalException(const TryCatch&);
 
  public:
-#if NODE_MODULE_VERSION > NODE_0_12_MODULE_VERSION
   TryCatch() : try_catch_(v8::Isolate::GetCurrent()) {}
-#endif
 
   NAN_INLINE bool HasCaught() const { return try_catch_.HasCaught(); }
 
   NAN_INLINE bool CanContinue() const { return try_catch_.CanContinue(); }
 
   NAN_INLINE v8::Local<v8::Value> ReThrow() {
-#if NODE_MODULE_VERSION < IOJS_3_0_MODULE_VERSION
-    return New(try_catch_.ReThrow());
-#else
     return try_catch_.ReThrow();
-#endif
   }
 
   NAN_INLINE v8::Local<v8::Value> Exception() const {
