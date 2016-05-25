@@ -65,8 +65,6 @@ class WeakCallbackInfo {
 };
 
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
 
 template<typename T>
 void
@@ -116,95 +114,6 @@ WeakCallbackInfo<T> *WeakCallbackInfo<T>::unwraptwofield(
 #undef NAN_WEAK_TWOFIELD_CALLBACK_SIG_
 #undef NAN_WEAK_PARAMETER_CALLBACK_DATA_TYPE_
 #undef NAN_WEAK_TWOFIELD_CALLBACK_DATA_TYPE_
-# elif NODE_MODULE_VERSION > NODE_0_12_MODULE_VERSION
-
-template<typename T>
-void
-WeakCallbackInfo<T>::invokeparameter(NAN_WEAK_PARAMETER_CALLBACK_SIG_ data) {
-  WeakCallbackInfo<T> *cbinfo = unwrapparameter(data);
-  cbinfo->persistent_.Reset();
-  cbinfo->callback_(*cbinfo);
-  delete cbinfo;
-}
-
-template<typename T>
-void
-WeakCallbackInfo<T>::invoketwofield(NAN_WEAK_TWOFIELD_CALLBACK_SIG_ data) {
-  WeakCallbackInfo<T> *cbinfo = unwraptwofield(data);
-  cbinfo->persistent_.Reset();
-  cbinfo->callback_(*cbinfo);
-  delete cbinfo;
-}
-
-template<typename T>
-WeakCallbackInfo<T> *WeakCallbackInfo<T>::unwrapparameter(
-    NAN_WEAK_PARAMETER_CALLBACK_DATA_TYPE_ data) {
-  WeakCallbackInfo<T> *cbinfo =
-       static_cast<WeakCallbackInfo<T>*>(data.GetParameter());
-  cbinfo->isolate_ = data.GetIsolate();
-  return cbinfo;
-}
-
-template<typename T>
-WeakCallbackInfo<T> *WeakCallbackInfo<T>::unwraptwofield(
-    NAN_WEAK_TWOFIELD_CALLBACK_DATA_TYPE_ data) {
-  WeakCallbackInfo<T> *cbinfo =
-       static_cast<WeakCallbackInfo<T>*>(data.GetInternalField1());
-  cbinfo->isolate_ = data.GetIsolate();
-  return cbinfo;
-}
-
-#undef NAN_WEAK_PARAMETER_CALLBACK_SIG_
-#undef NAN_WEAK_TWOFIELD_CALLBACK_SIG_
-#undef NAN_WEAK_PARAMETER_CALLBACK_DATA_TYPE_
-#undef NAN_WEAK_TWOFIELD_CALLBACK_DATA_TYPE_
-#elif NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION
-
-template<typename T>
-template<typename S>
-void WeakCallbackInfo<T>::invoke(NAN_WEAK_CALLBACK_SIG_ data) {
-  WeakCallbackInfo<T> *cbinfo = unwrap(data);
-  cbinfo->persistent_.Reset();
-  cbinfo->callback_(*cbinfo);
-  delete cbinfo;
-}
-
-template<typename T>
-template<typename S>
-WeakCallbackInfo<T> *WeakCallbackInfo<T>::unwrap(
-    NAN_WEAK_CALLBACK_DATA_TYPE_ data) {
-  void *parameter = data.GetParameter();
-  WeakCallbackInfo<T> *cbinfo =
-      static_cast<WeakCallbackInfo<T>*>(parameter);
-  cbinfo->isolate_ = data.GetIsolate();
-  return cbinfo;
-}
-
-#undef NAN_WEAK_CALLBACK_SIG_
-#undef NAN_WEAK_CALLBACK_DATA_TYPE_
-#else
-
-template<typename T>
-void WeakCallbackInfo<T>::invoke(NAN_WEAK_CALLBACK_SIG_ data) {
-  WeakCallbackInfo<T> *cbinfo = unwrap(data);
-  cbinfo->persistent_.Dispose();
-  cbinfo->persistent_.Clear();
-  cbinfo->callback_(*cbinfo);
-  delete cbinfo;
-}
-
-template<typename T>
-WeakCallbackInfo<T> *WeakCallbackInfo<T>::unwrap(
-    NAN_WEAK_CALLBACK_DATA_TYPE_ data) {
-  WeakCallbackInfo<T> *cbinfo =
-      static_cast<WeakCallbackInfo<T>*>(data);
-  cbinfo->isolate_ = v8::Isolate::GetCurrent();
-  return cbinfo;
-}
-
-#undef NAN_WEAK_CALLBACK_SIG_
-#undef NAN_WEAK_CALLBACK_DATA_TYPE_
-#endif
 
 #if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
   (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
