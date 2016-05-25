@@ -354,16 +354,9 @@ class TryCatch {
     return try_catch_.Exception();
   }
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
   NAN_INLINE v8::MaybeLocal<v8::Value> StackTrace() const {
     return try_catch_.StackTrace(GetCurrentContext());
   }
-#else
-  NAN_INLINE MaybeLocal<v8::Value> StackTrace() const {
-    return MaybeLocal<v8::Value>(try_catch_.StackTrace());
-  }
-#endif
 
   NAN_INLINE v8::Local<v8::Message> Message() const {
     return try_catch_.Message();
