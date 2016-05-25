@@ -196,8 +196,6 @@ Factory<v8::RegExp>::New(
 
 //=== Script ===================================================================
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
 Factory<v8::Script>::return_t
 Factory<v8::Script>::New( v8::Local<v8::String> source) {
   v8::ScriptCompiler::Source src(source);
@@ -210,22 +208,6 @@ Factory<v8::Script>::New( v8::Local<v8::String> source
   v8::ScriptCompiler::Source src(source, origin);
   return v8::ScriptCompiler::Compile(GetCurrentContext(), &src);
 }
-#else
-Factory<v8::Script>::return_t
-Factory<v8::Script>::New( v8::Local<v8::String> source) {
-  v8::ScriptCompiler::Source src(source);
-  return Factory<v8::Script>::return_t(
-      v8::ScriptCompiler::Compile(v8::Isolate::GetCurrent(), &src));
-}
-
-Factory<v8::Script>::return_t
-Factory<v8::Script>::New( v8::Local<v8::String> source
-                        , v8::ScriptOrigin const& origin) {
-  v8::ScriptCompiler::Source src(source, origin);
-  return Factory<v8::Script>::return_t(
-      v8::ScriptCompiler::Compile(v8::Isolate::GetCurrent(), &src));
-}
-#endif
 
 //=== Signature ================================================================
 
