@@ -1200,25 +1200,13 @@ NAN_INLINE ssize_t DecodeWrite(
   , size_t len
   , v8::Local<v8::Value> val
   , enum Encoding encoding = BINARY) {
-#if (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)
+
   return node::DecodeWrite(
       v8::Isolate::GetCurrent()
     , buf
     , len
     , val
     , static_cast<node::encoding>(encoding));
-#else
-# if (NODE_MODULE_VERSION < NODE_0_10_MODULE_VERSION)
-  if (encoding == BUFFER) {
-    return node::DecodeWrite(buf, len, val, node::BINARY);
-  }
-# endif
-  return node::DecodeWrite(
-      buf
-    , len
-    , val
-    , static_cast<node::encoding>(encoding));
-#endif
 }
 
 NAN_INLINE void SetPrototypeTemplate(
