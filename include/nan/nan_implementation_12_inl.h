@@ -51,8 +51,7 @@ Factory<v8::Context>::New( v8::ExtensionConfiguration* extensions
 
 //=== Date =====================================================================
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 4 ||                      \
-  (V8_MAJOR_VERSION == 4 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 3))
+
 Factory<v8::Date>::return_t
 Factory<v8::Date>::New(double value) {
   v8::Local<v8::Date> ret;
@@ -63,13 +62,7 @@ Factory<v8::Date>::New(double value) {
     return v8::MaybeLocal<v8::Date>(ret);
   }
 }
-#else
-Factory<v8::Date>::return_t
-Factory<v8::Date>::New(double value) {
-  return Factory<v8::Date>::return_t(
-      v8::Date::New(v8::Isolate::GetCurrent(), value).As<v8::Date>());
-}
-#endif
+
 
 //=== External =================================================================
 
