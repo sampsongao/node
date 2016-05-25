@@ -902,7 +902,7 @@ class Callback {
   Persistent<v8::Object> handle;
   static const uint32_t kCallbackIndex = 0;
 
-#if (NODE_MODULE_VERSION > NODE_0_10_MODULE_VERSION)
+
   v8::Local<v8::Value> Call_(v8::Isolate *isolate
                            , v8::Local<v8::Object> target
                            , int argc
@@ -919,22 +919,6 @@ class Callback {
       , argv
     ));
   }
-#else
-  v8::Local<v8::Value> Call_(v8::Local<v8::Object> target
-                           , int argc
-                           , v8::Local<v8::Value> argv[]) const {
-    EscapableHandleScope scope;
-
-    v8::Local<v8::Function> callback = New(handle)->
-        Get(kCallbackIndex).As<v8::Function>();
-    return scope.Escape(New(node::MakeCallback(
-        target
-      , callback
-      , argc
-      , argv
-    )));
-  }
-#endif
 };
 
 /* abstract */ class AsyncWorker {
